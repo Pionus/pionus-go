@@ -7,6 +7,9 @@ import (
 
 
 func main() {
+    crtpath := "server.crt"
+    keypath := "server.key"
+
     StaticServ := http.FileServer(http.Dir("public/"))
     MarkdServ := http.FileServer(http.Dir("markdowns/"))
     http.Handle("/assets/", http.StripPrefix("/assets/", StaticServ))
@@ -15,6 +18,6 @@ func main() {
     http.HandleFunc("/", controllers.IndexController)
     http.HandleFunc("/articles/", controllers.ArticleController)
 
-    // http.ListenAndServeTLS(":8089", "server.crt", "server.key", nil)
-    http.ListenAndServe(":8089", nil)
+    http.ListenAndServeTLS(":8089", crtpath, keypath, nil)
+    // http.ListenAndServe(":8089", nil)
 }
