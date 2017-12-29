@@ -13,7 +13,9 @@ marked.setOptions({
 
 $el = document.querySelector('#article')
 
-fetch("/md/20171209.md").then(response => {
+fetch("/md/20171209.md", {
+    credentials: 'include'
+}).then(response => {
     return response.text()
 }).then(text => {
     $el.innerHTML = marked(text)
