@@ -1,7 +1,7 @@
 package controllers
 
 import (
-    // "fmt"
+    "fmt"
     // "io/ioutil"
     "net/http"
     "html/template"
@@ -17,6 +17,7 @@ func ArticleController(w http.ResponseWriter, r *http.Request) {
     pusher, ok := w.(http.Pusher)
 
     if ok {
+        fmt.Printf("Push is supported")
         options := &http.PushOptions{
             Header: http.Header{
                 "Accept-Encoding": r.Header["Accept-Encoding"],
