@@ -10,7 +10,7 @@ import (
 )
 
 type Article struct {
-    Body    template.HTML
+    Id  string
 }
 
 func ArticleController(w http.ResponseWriter, r *http.Request) {
