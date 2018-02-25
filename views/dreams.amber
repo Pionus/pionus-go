@@ -1,0 +1,29 @@
+extends layout
+
+block title
+    title 痴人说梦
+
+block append styles
+    link[rel="stylesheet"][href="/assets/dreams.css"]
+
+block body
+    div.container
+
+        each $dream in Dreams
+            div.row
+                div.dream-box
+                    div.dream-time
+                        strong #{$dream.Month} #{$dream.Day}
+                        img.face[src="//www.gravatar.com/avatar/"+ $dream.Face]
+                    div.dream-content #{$dream.Content}
+                    
+        div.row
+            form#form[action="#"]
+                label[for="email"] Email
+                input#email[type="text"][placeholder="email@example.com"]
+                label[for="content"] Dream
+                textarea#content[placeholder="Write your dream..."]
+                input#submit.button[type="submit"][value="record"]
+
+block append scripts
+    script[type="text/javascript"][src="/assets/dreams.js"]

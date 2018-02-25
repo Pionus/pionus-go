@@ -1,0 +1,34 @@
+html{
+    background-color: #f1f1f1;
+}
+
+.dream-box{
+    margin: 0 auto 3rem;
+    padding: 2rem;
+    width: 40rem;
+    background-color: white;
+    box-shadow: 0 0.1rem 0.2rem silver;
+    border-radius: 0.2rem;
+}
+
+.dream-time{
+    display: flex;
+    margin-bottom: 2rem;
+    font-size: 2.0rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.face{
+    margin-right: 1rem;
+    height: 3.2rem;
+    width: 3.2rem;
+    border-radius: 50%;
+}
+
+form{
+    margin: 0 auto;
+    padding: 2rem;
+    width: 40rem;
+    background-color: white;
+}

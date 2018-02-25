@@ -28,7 +28,7 @@ func (c *ArticleController) Get() mvc.Result {
     c.Ctx.ResponseWriter().Push("/assets/article.js", nil)
 
     return mvc.View {
-        Name: "article.html",
+        Name: "article.amber",
         Data: Article{},
     }
 }
@@ -39,7 +39,7 @@ func (c *ArticleController) GetBy(id string) mvc.Result {
     c.Ctx.ResponseWriter().Push("/assets/article.js", nil)
 
     return mvc.View {
-        Name: "article.html",
+        Name: "article.amber",
         Data: Article{
             Id: id,
         },

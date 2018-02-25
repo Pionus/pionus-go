@@ -10,18 +10,26 @@ import (
 func main() {
     app := iris.New()
 
-    app.RegisterView(iris.HTML("./views", ".html"))
-    crtpath := "server.crt"
-    keypath := "server.key"
+    // pugEngine := iris.Pug("./views", ".pug")
+    amberEngine := iris.Amber("./views", ".amber")
+    htmlEngine := iris.HTML("./views", ".html")
+    amberEngine.Reload(true)
+    app.RegisterView(amberEngine)
+    app.RegisterView(htmlEngine)
+
+    // crtpath := "server.crt"
+    // keypath := "server.key"
 
     app.StaticWeb("/assets/", "./public/")
     app.StaticWeb("/md/", "./markdowns/")
 
     mvc.New(app.Party("/")).Handle(new(controllers.IndexController))
     mvc.New(app.Party("/articles/")).Handle(new(controllers.ArticleController))
+    mvc.New(app.Party("/dreams/")).Handle(new(controllers.DreamsController))
 
     app.Run(
-        iris.TLS(":8089", crtpath, keypath),
+        iris.Addr(":8089"),
+        // iris.TLS(":8089", crtpath, keypath),
     )
 
     // StaticServ := http.FileServer(http.Dir("public/"))
