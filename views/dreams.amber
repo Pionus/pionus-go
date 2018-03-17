@@ -16,14 +16,28 @@ block body
                         strong #{$dream.Month} #{$dream.Day}
                         img.face[src="//www.gravatar.com/avatar/"+ $dream.Face]
                     div.dream-content #{$dream.Content}
-                    
+
         div.row
             form#form[action="#"]
                 label[for="email"] Email
                 input#email[type="text"][placeholder="email@example.com"]
                 label[for="content"] Dream
                 textarea#content[placeholder="Write your dream..."]
+                div#captcha
                 input#submit.button[type="submit"][value="record"]
 
 block append scripts
+    script[type="text/javascript"][src="/assets/gt.js"]
+    script[type="text/javascript"]
+        initGeetest({
+            gt: #{GeeTest.Gt},
+            challenge: #{GeeTest.Challenge},
+            offline: !#{GeeTest.Success},
+            new_captcha: #{GeeTest.NewCaptcha},
+            width: "100%",
+            product: 'float',
+        }, function(obj) {
+            console.log('~~~~~', obj)
+            obj.appendTo("#captcha")
+        })
     script[type="text/javascript"][src="/assets/dreams.js"]

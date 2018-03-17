@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/tui-editor@1.0.4/dist/tui-editor.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/tui-editor@1.0.4/dist/tui-editor-contents.min.css">
+    </head>
+    <body>
+        <div id="editor"></div>
+        <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdn.bootcss.com/markdown-it/8.4.1/markdown-it.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/to-mark@1.0.0/dist/to-mark.min.js"></script>
+        <script src="https://unpkg.com/tui-code-snippet@1.2.9/dist/tui-code-snippet.min.js"></script>
+        <script src="https://cdn.bootcss.com/squire-rte/1.8.11/squire-raw.js"></script>
+        <script src="https://cdn.bootcss.com/codemirror/5.35.0/codemirror.min.js"></script>
+        <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/tui-editor@1.0.4/dist/tui-editor-Editor.js"></script>
+        <script>
+        var editor = new tui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'markdown',
+            previewStyle: 'vertical',
+            height: '300px'
+        });
+        </script>
+    </body>
+</html>
