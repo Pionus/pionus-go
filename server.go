@@ -26,6 +26,7 @@ func main() {
     mvc.New(app.Party("/")).Handle(new(controllers.IndexController))
     mvc.New(app.Party("/articles/")).Handle(new(controllers.ArticleController))
     mvc.New(app.Party("/dreams/")).Handle(new(controllers.DreamsController))
+    mvc.New(app.Party("/editor/")).Handle(new(controllers.EditorController))
 
     app.Run(
         iris.Addr(":8089"),
