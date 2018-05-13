@@ -11,6 +11,9 @@ import (
     _ "github.com/go-sql-driver/mysql"
     // _ "github.com/mattn/go-sqlite3"
     "github.com/pionus/pionus-go/models"
+    "github.com/pionus/pionus-go/config"
+
+    "github.com/Secbone/geetest"
 )
 
 type DreamsController struct {
@@ -19,6 +22,7 @@ type DreamsController struct {
 
 type List struct {
     Dreams []models.Dream
+    GeeTest geetest.RegisterResult
 }
 
 type Response struct {
@@ -47,10 +51,21 @@ func (c *DreamsController) Get() mvc.Result {
         dreams = append(dreams, d)
     }
 
+    gtconfig := config.Config.Geetest
+
+    tester := geetest.New(
+        gtconfig.Id,
+        gtconfig.Key,
+    )
+
+    result := tester.Register()
+
     return mvc.View {
         Name: "dreams.amber",
+
         Data: List{
             Dreams: dreams,
+            GeeTest: result,
         },
     }
 }
@@ -83,7 +98,7 @@ func (c *DreamsController) Post() {
 
 func getDB() (*sql.DB, error) {
     // return sql.Open("sqlite3", "sqlite/dreams.db")
-    return sql.Open("mysql", "root@/dreams?parseTime=true")
+    return sql.Open("mysql", "root:123@tcp(127.0.0.1:3306)/dreams?parseTime=true")
 }
 
 

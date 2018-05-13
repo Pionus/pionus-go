@@ -1,14 +1,30 @@
 package main
 
 import (
+    // "fmt"
+    // "context"
+    // "io/ioutil"
+    // "encoding/json"
     "github.com/kataras/iris"
     "github.com/kataras/iris/mvc"
-    "github.com/pionus/pionus-go/controllers"
-)
 
+    "github.com/pionus/pionus-go/controllers"
+    "github.com/pionus/pionus-go/resolver"
+    "github.com/pionus/pionus-go/schema"
+    "github.com/pionus/pionus-go/middlewares/graphql"
+
+    // graphql "github.com/graph-gophers/graphql-go"
+    // "github.com/graph-gophers/graphql-go/relay"
+    // "log"
+)
 
 func main() {
     app := iris.New()
+
+    graph := graphql.New(graphql.Options{
+        Schema: schema.String(),
+        Resolver: &resolver.Resolver{},
+    })
 
     // pugEngine := iris.Pug("./views", ".pug")
     amberEngine := iris.Amber("./views", ".amber")
@@ -27,6 +43,8 @@ func main() {
     mvc.New(app.Party("/articles/")).Handle(new(controllers.ArticleController))
     mvc.New(app.Party("/dreams/")).Handle(new(controllers.DreamsController))
     mvc.New(app.Party("/editor/")).Handle(new(controllers.EditorController))
+
+    app.Any("/graphql/", graph)
 
     app.Run(
         iris.Addr(":8089"),
