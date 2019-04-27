@@ -1,16 +1,34 @@
 package main
 
 import (
-    "github.com/kataras/iris"
-    "github.com/pionus/pionus-go/controllers"
+    "log"
+    "os"
+    "strings"
+    "path/filepath"
 )
 
 func main() {
-    app := iris.New()
+    var files []string
 
-    app.StaticWeb("/assets", "./public")
-    app.RegisterView(iris.HTML("./views", ".html"))
-    app.Controller("/", new(controllers.IndexController))
+    root := "markdowns/"
 
-    app.Run(iris.Addr(":8099"))
+    err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+
+        if info.IsDir() {
+            return nil
+        }
+
+        fullname := info.Name()
+        ext := filepath.Ext(fullname)
+        if ext == ".md" {
+            name := strings.TrimSuffix(fullname, ext)
+            files = append(files, name)
+        }
+
+        return nil
+    })
+
+    if err != nil {
+        panic(err)
+    }
 }
