@@ -2,22 +2,44 @@ package main
 
 import (
     "net/http"
-    "github.com/pionus/pionus-go/controllers"
+    "fmt"
+    "log"
+    "github.com/pionus/framework"
+    "github.com/pionus/framework/middlewares"
 )
 
 
+
 func main() {
-    crtpath := "server.crt"
-    keypath := "server.key"
+	app := pionus.NewApp()
+    app.Use(middlewares.Logger)
+    app.Use(middlewares.Panic)
 
-    StaticServ := http.FileServer(http.Dir("public/"))
-    MarkdServ := http.FileServer(http.Dir("markdowns/"))
-    http.Handle("/assets/", http.StripPrefix("/assets/", StaticServ))
-    http.Handle("/md/", http.StripPrefix("/md/", MarkdServ))
+    app.Static("/static", "./public")
 
-    http.HandleFunc("/", controllers.IndexController)
-    http.HandleFunc("/articles/", controllers.ArticleController)
+    router := app.Router()
 
-    http.ListenAndServeTLS(":8089", crtpath, keypath, nil)
-    // http.ListenAndServe(":8089", nil)
+    router.Get("/", func(ctx *pionus.Context) {
+		ctx.Text(http.StatusOK, "hey~")
+	})
+
+	router.Get(`/hello`, func(ctx *pionus.Context) {
+		ctx.Text(http.StatusOK, "Hello world")
+	})
+
+	router.Get(`/hello/:name`, func(ctx *pionus.Context) {
+        fmt.Printf("hello %s", ctx.Params["name"])
+		ctx.Text(http.StatusOK, fmt.Sprintf("Hello %s", ctx.Params["name"]))
+	})
+
+    router.Get("/panic", func(ctx *pionus.Context) {
+        panic(123)
+    })
+
+	err := http.ListenAndServe(":80", app)
+
+	if err != nil {
+		log.Fatalf("Could not start server: %s\n", err.Error())
+	}
+
 }
