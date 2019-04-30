@@ -11,6 +11,8 @@ import (
 
 
 func main() {
+    config := GetConfig()
+
 	app := pionus.NewApp()
     app.Use(middlewares.Logger)
     app.Use(middlewares.Panic)
@@ -36,7 +38,8 @@ func main() {
         panic(123)
     })
 
-	err := http.ListenAndServe(":80", app)
+
+    err := app.StartTLS(config.Addr, config.Cert, config.Key)
 
 	if err != nil {
 		log.Fatalf("Could not start server: %s\n", err.Error())
