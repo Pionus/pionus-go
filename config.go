@@ -4,6 +4,7 @@ type Config struct {
     Addr string
     Cert string
     Key string
+    Domain []string
 }
 
 func GetConfig() *Config {
