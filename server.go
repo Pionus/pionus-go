@@ -39,7 +39,7 @@ func main() {
     })
 
 
-    err := app.StartTLS(config.Addr, "example.com", "*.example.com")
+    err := app.Start(config.Addr)
 
 	if err != nil {
 		log.Fatalf("Could not start server: %s\n", err.Error())
