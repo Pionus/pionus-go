@@ -34,8 +34,10 @@ func main() {
 		ctx.Text(http.StatusOK, fmt.Sprintf("Hello %s", ctx.Params["name"]))
 	})
 
-    router.Get("/panic", func(ctx *pionus.Context) {
-        panic(123)
+    router.Get("/push", func(ctx *pionus.Context) {
+        ctx.Push("/static/article.css")
+        ctx.Push("/static/article.js")
+        ctx.Text(http.StatusOK, "pushed~")
     })
 
 
