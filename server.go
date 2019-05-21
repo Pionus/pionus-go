@@ -6,6 +6,7 @@ import (
     "log"
     "github.com/pionus/arry"
     "github.com/pionus/arry/middlewares"
+    "github.com/pionus/pionus-go/controllers"
 )
 
 
@@ -17,13 +18,14 @@ func main() {
     app.Use(middlewares.Logger)
     app.Use(middlewares.Panic)
 
-    app.Static("/static", "./public")
+    app.Static("/assets", "./public")
+    app.Static("/md", "./markdowns")
+    app.Views("views/")
 
     router := app.Router()
 
-    router.Get("/", func(ctx arry.Context) {
-		ctx.Text(http.StatusOK, "hey~")
-	})
+    router.Get("/", controllers.IndexController)
+    router.Get("/article", controllers.ArticleController)
 
 	router.Get(`/hello`, func(ctx arry.Context) {
 		ctx.Text(http.StatusOK, "Hello world")
