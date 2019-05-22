@@ -1,15 +1,19 @@
 package main
 
+import (
+    "io/ioutil"
+    "encoding/json"
+)
+
 type Config struct {
-    Addr string
-    Cert string
-    Key string
+    Addr string `json:"addr"`
+    Cert string `json:"cert"`
+    Key string `json:"key"`
 }
 
 func GetConfig() *Config {
-    return &Config{
-        Addr: ":80",
-        Cert: "server.crt",
-        Key: "server.key",
-    }
+    file, _ := ioutil.ReadFile("config.json")
+    var config Config
+    json.Unmarshal(file, &config)
+    return &config
 }

@@ -1,0 +1,9 @@
+{
+    "addr": ":8087",
+    "cert": "server.crt",
+    "key": "server.key",
+    "geetest": {
+        "id": "",
+        "key": ""
+    }
+}
