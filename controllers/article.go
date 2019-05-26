@@ -2,8 +2,6 @@ package controllers
 
 import (
     "github.com/pionus/arry"
-
-    // "gopkg.in/russross/blackfriday.v2"
 )
 
 type Article struct {
@@ -16,11 +14,7 @@ func ArticleController(ctx arry.Context) {
     ctx.Push("/md/20171209.md")
 
     article :=  Article{
-        Id: "20171209",
+        Id: ctx.Param("id"),
     }
     ctx.Render(200, "article.html", article)
-
-
-    // file, err := ioutil.ReadFile("markdowns/20171209.md")
-    // body := template.HTML(blackfriday.Run(file))
 }

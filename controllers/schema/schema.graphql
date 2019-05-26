@@ -1,0 +1,13 @@
+schema {
+	query: Query
+}
+
+type Query {
+	list: [Article]
+	article(id: String!): Article
+}
+
+type Article {
+	id: ID!
+	content: String!
+}

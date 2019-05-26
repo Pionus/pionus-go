@@ -1,22 +1,37 @@
 marked.setOptions({
-    // highlight: function(code, lang) {
-    //   if (typeof lang === 'undefined') {
-    //     return hljs.highlightAuto(code).value;
-    //   } else if (lang === 'nohighlight') {
-    //     return code;
-    //   } else {
-    //     return hljs.highlight(lang, code).value;
-    //   }
-    // },
     kaTex: katex
 });
 
+function graphql(options) {
+    let {query = ''} = options
+
+    return fetch('/graphql/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: query}),
+    }).then(res => res.json())
+}
+
 $el = document.querySelector('#article')
 
-fetch("/md/20171209.md", {
-    credentials: 'include'
-}).then(response => {
-    return response.text()
-}).then(text => {
-    $el.innerHTML = marked(text)
-})
+
+if(article_id) {
+    graphql({
+        query: `{ article(id: "${article_id}") { id content } }`
+    }).then(data => {
+        let content = marked(data.article.content)
+        console.log(content)
+        $el.innerHTML = content
+    })
+} else {
+    // get list
+    graphql({
+        query: '{ list {id content} }',
+    }).then(data => {
+        console.log(data)
+    })
+    console.log("no article")
+}

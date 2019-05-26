@@ -6,7 +6,8 @@ import (
     "log"
     "github.com/pionus/arry"
     "github.com/pionus/arry/middlewares"
-    "github.com/pionus/pionus-go/controllers"
+
+    "./controllers"
 )
 
 
@@ -25,7 +26,7 @@ func main() {
     router := app.Router()
 
     router.Get("/", controllers.IndexController)
-    router.Get("/article", controllers.ArticleController)
+    router.Get("/article/:id", controllers.ArticleController)
 
 	router.Get(`/hello`, func(ctx arry.Context) {
 		ctx.Text(http.StatusOK, "Hello world")
@@ -41,6 +42,8 @@ func main() {
         ctx.Push("/static/article.js")
         ctx.Text(http.StatusOK, "pushed~")
     })
+
+    router.Post("/graphql", controllers.GraphController())
 
 
     err := app.Start(config.Addr)
