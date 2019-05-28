@@ -11,8 +11,8 @@ import (
 
 type GraphqlParam struct {
     Query string `json:"query"`
-    OperationName string `json:"operationName"`
-    Variables map[string]interface{} `json:"variables"`
+    OperationName string `json:"operationName,omitempty"`
+    Variables map[string]interface{} `json:"variables,omitempty"`
 }
 
 
@@ -37,7 +37,7 @@ func GraphController() arry.Handler {
             return
         }
 
-        ctx.Text(200, string(result.Data))
+        ctx.JSON(200, result.Data)
     }
 
 }
