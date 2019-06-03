@@ -8,6 +8,7 @@ import (
     "github.com/pionus/arry/middlewares"
 
     "./controllers"
+    "./graphql"
 )
 
 
@@ -43,7 +44,7 @@ func main() {
         ctx.Text(http.StatusOK, "pushed~")
     })
 
-    router.Post("/graphql", controllers.GraphController())
+    router.Post("/graphql", graphql.GetController())
 
 
     err := app.Start(config.Addr)

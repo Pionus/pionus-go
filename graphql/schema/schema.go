@@ -6,7 +6,7 @@ import (
 
 
 func String() string {
-    b, err := ioutil.ReadFile("controllers/schema/schema.graphql")
+    b, err := ioutil.ReadFile("graphql/schema/schema.graphql")
 
     if err != nil {
         panic(err)

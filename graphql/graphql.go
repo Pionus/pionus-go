@@ -1,4 +1,4 @@
-package controllers
+package graphql
 
 import (
     "github.com/pionus/arry"
@@ -17,7 +17,7 @@ type GraphqlParam struct {
 
 
 
-func GraphController() arry.Handler {
+func GetController() arry.Handler {
     s := graphql.MustParseSchema(schema.String(), resolver.New())
 
     return func(ctx arry.Context) {
