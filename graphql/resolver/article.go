@@ -3,7 +3,7 @@ package resolver
 import (
     graphql "github.com/graph-gophers/graphql-go"
 
-    "../../models"
+    "github.com/pionus/pionus-go/models"
 )
 
 

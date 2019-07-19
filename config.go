@@ -9,6 +9,7 @@ type Config struct {
     Addr string `json:"addr"`
     Cert string `json:"cert"`
     Key string `json:"key"`
+    Theme string `json:"theme"`
 }
 
 func GetConfig() *Config {

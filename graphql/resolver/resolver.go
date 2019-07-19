@@ -3,7 +3,7 @@ package resolver
 import (
     "context"
 
-    "../../services"
+    "github.com/pionus/pionus-go/services"
 )
 
 type Resolver struct {}
@@ -15,7 +15,13 @@ func New() *Resolver {
 
 
 func (r *Resolver) List(ctx context.Context) (*[]*ArticleResolver, error) {
-    l := make([]*ArticleResolver, 1)
+    list, _ := services.GetArticleList()
+
+    var l []*ArticleResolver
+    for _, article := range *list {
+        l = append(l, &ArticleResolver{ article })
+    }
+
     return &l, nil
 }
 

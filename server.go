@@ -7,8 +7,8 @@ import (
     "github.com/pionus/arry"
     "github.com/pionus/arry/middlewares"
 
-    "./controllers"
-    "./graphql"
+    "github.com/pionus/pionus-go/controllers"
+    "github.com/pionus/pionus-go/graphql"
 )
 
 
@@ -20,14 +20,17 @@ func main() {
     app.Use(middlewares.Logger)
     app.Use(middlewares.Panic)
 
-    app.Static("/assets", "./public")
     app.Static("/md", "./markdowns")
-    app.Views("views/")
+    app.Static("/assets", "./theme/"+ config.Theme +"/assets")
+    app.Static("/node_modules", "./theme/"+ config.Theme +"/node_modules")
+    app.Static("/web_modules", "./theme/"+ config.Theme +"/web_modules")
+    app.Views("./theme/"+ config.Theme +"/pages")
 
     router := app.Router()
 
     router.Get("/", controllers.IndexController)
-    router.Get("/article/:id", controllers.ArticleController)
+    router.Get("/article", controllers.ArticleList)
+    router.Get("/article/:id", controllers.ArticleDetail)
 
 	router.Get(`/hello`, func(ctx arry.Context) {
 		ctx.Text(http.StatusOK, "Hello world")
@@ -39,8 +42,8 @@ func main() {
 	})
 
     router.Get("/push", func(ctx arry.Context) {
-        ctx.Push("/static/article.css")
-        ctx.Push("/static/article.js")
+        ctx.Push("/assets/styles/main.css")
+        ctx.Push("/assets/article.js")
         ctx.Text(http.StatusOK, "pushed~")
     })
 

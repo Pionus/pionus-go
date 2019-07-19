@@ -6,7 +6,7 @@ import (
     "strings"
     "io/ioutil"
     "path/filepath"
-    "../models"
+    "github.com/pionus/pionus-go/models"
 )
 
 func GetArticleByID(id string) (*models.Article, error) {

@@ -4,8 +4,8 @@ import (
     "github.com/pionus/arry"
     graphql "github.com/graph-gophers/graphql-go"
 
-    "./resolver"
-    "./schema"
+    "github.com/pionus/pionus-go/graphql/resolver"
+    "github.com/pionus/pionus-go/graphql/schema"
 )
 
 
