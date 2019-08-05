@@ -15,6 +15,10 @@ func (r *ArticleResolver) ID() graphql.ID {
     return graphql.ID(r.article.ID)
 }
 
+func (r *ArticleResolver) Title() string {
+    return r.article.Title
+}
+
 func (r *ArticleResolver) Content() string {
     return r.article.Content
 }

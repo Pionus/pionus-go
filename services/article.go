@@ -3,14 +3,24 @@ package services
 import (
     "os"
     "time"
+    "regexp"
     "strings"
     "io/ioutil"
     "path/filepath"
     "github.com/pionus/pionus-go/models"
 )
 
+
+func parseTitle(file []byte) string {
+    re := regexp.MustCompile(`^#\s+(.+)\s`)
+    title := re.FindSubmatch(file)
+    return string(title[1])
+}
+
+
 func GetArticleByID(id string) (*models.Article, error) {
     file, err := ioutil.ReadFile("markdowns/" + id + ".md")
+    title := parseTitle(file)
 
     if err != nil {
         return nil, err
@@ -19,7 +29,7 @@ func GetArticleByID(id string) (*models.Article, error) {
     return &models.Article{
         ID: id,
         Author: "Secbone",
-        Title: id,
+        Title: title,
         Content: string(file),
         Created: time.Now(),
     }, nil
