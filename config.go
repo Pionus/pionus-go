@@ -9,6 +9,7 @@ type Config struct {
     Addr string `json:"addr"`
     Cert string `json:"cert"`
     Key string `json:"key"`
+    Authorization string `json:"authorization"`
     Theme string `json:"theme"`
 }
 

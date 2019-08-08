@@ -5,9 +5,9 @@ import (
 )
 
 type Article struct {
-    ID string
-    Author string
-    Title string
-    Content string
-    Created time.Time
+    ID string `json:"id"`
+    Author string `json:"author"`
+    Title string `json:"title"`
+    Content string `json:"content"`
+    Created time.Time `json:"created"`
 }

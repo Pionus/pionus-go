@@ -17,8 +17,10 @@ func main() {
     config := GetConfig()
 
 	app := arry.New()
-    app.Use(middlewares.Logger)
+    app.Use(middlewares.Gzip)
+    app.Use(middlewares.LoggerToFile("logs/access.log"))
     app.Use(middlewares.Panic)
+    app.Use(middlewares.Auth(config.Authorization))
 
     app.Static("/md", "./markdowns")
     app.Static("/assets", "./theme/"+ config.Theme +"/assets")
@@ -31,6 +33,8 @@ func main() {
     router.Get("/", controllers.IndexController)
     router.Get("/article", controllers.ArticleList)
     router.Get("/article/:id", controllers.ArticleDetail)
+
+    router.Post("/wp-json/wp/v2/posts", controllers.WPPost)
 
 	router.Get(`/hello`, func(ctx arry.Context) {
 		ctx.Text(http.StatusOK, "Hello world")

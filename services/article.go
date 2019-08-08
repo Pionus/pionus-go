@@ -11,6 +11,10 @@ import (
 )
 
 
+func basePath() string {
+    return "markdowns/"
+}
+
 func parseTitle(file []byte) string {
     re := regexp.MustCompile(`^#\s+(.+)\s`)
     title := re.FindSubmatch(file)
@@ -38,7 +42,7 @@ func GetArticleByID(id string) (*models.Article, error) {
 func GetArticleList() (*[]*models.Article, error) {
     var list []*models.Article
 
-    err := filepath.Walk("markdowns/", func(path string, info os.FileInfo, err error) error {
+    err := filepath.Walk(basePath(), func(path string, info os.FileInfo, err error) error {
         if info.IsDir() {
             return nil
         }
@@ -60,4 +64,19 @@ func GetArticleList() (*[]*models.Article, error) {
     }
 
     return &list, nil
+}
+
+func SaveArticle(a *models.Article) error {
+    now := time.Now()
+    id := now.Format("20060102")
+    content := "# " + a.Title + "\n" + a.Content
+
+    f, err := os.OpenFile(basePath() + id + ".md", os.O_CREATE | os.O_EXCL | os.O_WRONLY, 0644)
+    if err != nil {
+        return err
+    }
+    defer f.Close()
+
+    f.WriteString(content)
+    return nil
 }
