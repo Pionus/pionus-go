@@ -24,11 +24,11 @@ func parseTitle(file []byte) string {
 
 func GetArticleByID(id string) (*models.Article, error) {
     file, err := ioutil.ReadFile("markdowns/" + id + ".md")
-    title := parseTitle(file)
-
     if err != nil {
         return nil, err
     }
+
+    title := parseTitle(file)
 
     return &models.Article{
         ID: id,

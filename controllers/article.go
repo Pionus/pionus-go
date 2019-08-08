@@ -2,19 +2,16 @@ package controllers
 
 import (
     "github.com/pionus/arry"
+    "github.com/pionus/pionus-go/services"
 )
 
-type Article struct {
-    Id  string
-}
-
 func ArticleList(ctx arry.Context) {
-    ctx.Render(200, "article.html", nil)
+    ctx.Render(200, "index.html", nil)
 }
 
 func ArticleDetail(ctx arry.Context) {
-    article :=  Article{
-        Id: ctx.Param("id"),
-    }
+    id := ctx.Param("id")
+    article, _ := services.GetArticleByID(id)
+
     ctx.Render(200, "article.html", article)
 }
