@@ -15,7 +15,7 @@ func New() *Resolver {
 
 
 func (r *Resolver) List(ctx context.Context) (*[]*ArticleResolver, error) {
-    list, _ := services.GetArticleList()
+    list, _ := services.Service.GetArticleList()
 
     var l []*ArticleResolver
     for _, article := range *list {
@@ -26,7 +26,7 @@ func (r *Resolver) List(ctx context.Context) (*[]*ArticleResolver, error) {
 }
 
 func (r *Resolver) Article(ctx context.Context, args struct { ID string }) (*ArticleResolver, error) {
-    article, err := services.GetArticleByID(args.ID)
+    article, err := services.Service.GetArticleByID(args.ID)
 
     if err != nil {
         return &ArticleResolver{}, err

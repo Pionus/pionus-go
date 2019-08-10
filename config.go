@@ -5,17 +5,21 @@ import (
     "encoding/json"
 )
 
-type Config struct {
+type config struct {
     Addr string `json:"addr"`
     Cert string `json:"cert"`
     Key string `json:"key"`
+    Storage string `json:"storage"`
     Authorization string `json:"authorization"`
     Theme string `json:"theme"`
 }
 
-func GetConfig() *Config {
+func GetConfig() *config {
     file, _ := ioutil.ReadFile("config.json")
-    var config Config
-    json.Unmarshal(file, &config)
-    return &config
+    var c config
+    json.Unmarshal(file, &c)
+    return &c
 }
+
+
+var Config = GetConfig()

@@ -3,6 +3,7 @@
     "theme": "default",
     "cert": "server.crt",
     "key": "server.key",
+    "storage": "file",
     "authorization": "",
     "geetest": {
         "id": "db1511727464037c9e132d9161e733ed",

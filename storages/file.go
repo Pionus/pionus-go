@@ -1,4 +1,4 @@
-package services
+package main
 
 import (
     "os"
@@ -10,19 +10,9 @@ import (
     "github.com/pionus/pionus-go/models"
 )
 
+type service struct {}
 
-func basePath() string {
-    return "markdowns/"
-}
-
-func parseTitle(file []byte) string {
-    re := regexp.MustCompile(`^#\s+(.+)\s`)
-    title := re.FindSubmatch(file)
-    return string(title[1])
-}
-
-
-func GetArticleByID(id string) (*models.Article, error) {
+func (s service) GetArticleByID(id string) (*models.Article, error) {
     file, err := ioutil.ReadFile("markdowns/" + id + ".md")
     if err != nil {
         return nil, err
@@ -39,7 +29,7 @@ func GetArticleByID(id string) (*models.Article, error) {
     }, nil
 }
 
-func GetArticleList() (*[]*models.Article, error) {
+func (s service) GetArticleList() (*[]*models.Article, error) {
     var list []*models.Article
 
     err := filepath.Walk(basePath(), func(path string, info os.FileInfo, err error) error {
@@ -52,7 +42,7 @@ func GetArticleList() (*[]*models.Article, error) {
 
         if ext == ".md" {
             name := strings.TrimSuffix(fullname, ext)
-            article, _ := GetArticleByID(name)
+            article, _ := s.GetArticleByID(name)
             list = append(list, article)
         }
 
@@ -66,17 +56,33 @@ func GetArticleList() (*[]*models.Article, error) {
     return &list, nil
 }
 
-func SaveArticle(a *models.Article) error {
+func (s service) SaveArticle(a *models.Article) (*models.Article, error) {
     now := time.Now()
-    id := now.Format("20060102")
-    content := "# " + a.Title + "\n" + a.Content
+    m := models.Article{
+        ID: now.Format("20060102150405"),
+        Content: "# " + a.Title + "\n" + a.Content,
+    }
 
-    f, err := os.OpenFile(basePath() + id + ".md", os.O_CREATE | os.O_EXCL | os.O_WRONLY, 0644)
+    f, err := os.OpenFile(basePath() + m.ID + ".md", os.O_CREATE | os.O_EXCL | os.O_WRONLY, 0644)
     if err != nil {
-        return err
+        return nil, err
     }
     defer f.Close()
 
-    f.WriteString(content)
-    return nil
+    f.WriteString(m.Content)
+
+    return &m, nil
 }
+
+
+func basePath() string {
+    return "markdowns/"
+}
+
+func parseTitle(file []byte) string {
+    re := regexp.MustCompile(`^#\s+(.+)\s`)
+    title := re.FindSubmatch(file)
+    return string(title[1])
+}
+
+var Service = service{}

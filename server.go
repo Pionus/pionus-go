@@ -14,19 +14,17 @@ import (
 
 
 func main() {
-    config := GetConfig()
-
 	app := arry.New()
     app.Use(middlewares.Gzip)
     app.Use(middlewares.LoggerToFile("logs/access.log"))
     app.Use(middlewares.Panic)
-    app.Use(middlewares.Auth(config.Authorization))
+    app.Use(middlewares.Auth(Config.Authorization))
 
     app.Static("/md", "./markdowns")
-    app.Static("/assets", "./theme/"+ config.Theme +"/assets")
-    app.Static("/node_modules", "./theme/"+ config.Theme +"/node_modules")
-    app.Static("/web_modules", "./theme/"+ config.Theme +"/web_modules")
-    app.Views("./theme/"+ config.Theme +"/pages")
+    app.Static("/assets", "./theme/"+ Config.Theme +"/assets")
+    app.Static("/node_modules", "./theme/"+ Config.Theme +"/node_modules")
+    app.Static("/web_modules", "./theme/"+ Config.Theme +"/web_modules")
+    app.Views("./theme/"+ Config.Theme +"/pages")
 
     router := app.Router()
 
@@ -54,7 +52,7 @@ func main() {
     router.Post("/graphql", graphql.GetController())
 
 
-    err := app.Start(config.Addr)
+    err := app.Start(Config.Addr)
 
 	if err != nil {
 		log.Fatalf("Could not start server: %s\n", err.Error())

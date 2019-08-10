@@ -20,7 +20,7 @@ func WPPost(ctx arry.Context) {
 
     var p models.Article
     ctx.Decode(&p)
-    err := services.SaveArticle(&p)
+    m, err := services.Service.SaveArticle(&p)
 
     if err != nil {
         ctx.Reply(500)
@@ -28,7 +28,7 @@ func WPPost(ctx arry.Context) {
     }
 
     ctx.JSON(200, PostResponse{
-        Id: "123",
+        Id: m.ID,
         Link: "localhost",
     })
 }

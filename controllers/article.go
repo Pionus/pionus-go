@@ -11,7 +11,7 @@ func ArticleList(ctx arry.Context) {
 
 func ArticleDetail(ctx arry.Context) {
     id := ctx.Param("id")
-    article, _ := services.GetArticleByID(id)
+    article, _ := services.Service.GetArticleByID(id)
 
     ctx.Render(200, "article.html", article)
 }
