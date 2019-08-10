@@ -1,8 +1,6 @@
 package main
 
 import (
-    "net/http"
-    "fmt"
     "log"
     "github.com/pionus/arry"
     "github.com/pionus/arry/middlewares"
@@ -33,22 +31,6 @@ func main() {
     router.Get("/article/:id", controllers.ArticleDetail)
 
     router.Post("/wp-json/wp/v2/posts", controllers.WPPost)
-
-	router.Get(`/hello`, func(ctx arry.Context) {
-		ctx.Text(http.StatusOK, "Hello world")
-	})
-
-	router.Get(`/hello/:name`, func(ctx arry.Context) {
-        fmt.Printf("hello %s", ctx.Param("name"))
-		ctx.Text(http.StatusOK, fmt.Sprintf("Hello %s", ctx.Param("name")))
-	})
-
-    router.Get("/push", func(ctx arry.Context) {
-        ctx.Push("/assets/styles/main.css")
-        ctx.Push("/assets/article.js")
-        ctx.Text(http.StatusOK, "pushed~")
-    })
-
     router.Post("/graphql", graphql.GetController())
 
 

@@ -6,5 +6,5 @@ import (
 
 
 func IndexController (ctx arry.Context) {
-    ctx.Render(200, "index.html", nil)
+    ctx.Render(200, "cover.html", nil)
 }
