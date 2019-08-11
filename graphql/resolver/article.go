@@ -22,3 +22,7 @@ func (r *ArticleResolver) Title() string {
 func (r *ArticleResolver) Content() string {
     return r.article.Content
 }
+
+func (r *ArticleResolver) Created() string {
+    return r.article.Created.Format("2006-01-02 15:04:05")
+}

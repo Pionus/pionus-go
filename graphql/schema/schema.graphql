@@ -11,4 +11,5 @@ type Article {
 	id: ID!
 	title: String!
 	content: String!
+	created: String!
 }

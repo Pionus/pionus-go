@@ -19,13 +19,14 @@ func (s service) GetArticleByID(id string) (*models.Article, error) {
     }
 
     title := parseTitle(file)
+    t, _ := time.Parse("20060102150405", id)
 
     return &models.Article{
         ID: id,
         Author: "Secbone",
         Title: title,
         Content: string(file),
-        Created: time.Now(),
+        Created: t,
     }, nil
 }
 
