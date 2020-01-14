@@ -1,0 +1,3 @@
+[submodule "theme/default"]
+	path = theme/default
+	url = git@github.com:pionus/default-theme.git
