@@ -10,7 +10,13 @@ import (
     "github.com/pionus/pionus-go/models"
 )
 
-type service struct {}
+type service struct {
+    basePath string
+}
+
+var Service = service{
+    basePath: "markdowns/",
+}
 
 func (s service) GetArticleByID(id string) (*models.Article, error) {
     file, err := ioutil.ReadFile("markdowns/" + id + ".md")
@@ -33,7 +39,7 @@ func (s service) GetArticleByID(id string) (*models.Article, error) {
 func (s service) GetArticleList() (*[]*models.Article, error) {
     var list []*models.Article
 
-    err := filepath.Walk(basePath(), func(path string, info os.FileInfo, err error) error {
+    err := filepath.Walk(s.basePath, func(path string, info os.FileInfo, err error) error {
         if info.IsDir() {
             return nil
         }
@@ -64,7 +70,7 @@ func (s service) SaveArticle(a *models.Article) (*models.Article, error) {
         Content: "# " + a.Title + "\n" + a.Content,
     }
 
-    f, err := os.OpenFile(basePath() + m.ID + ".md", os.O_CREATE | os.O_EXCL | os.O_WRONLY, 0644)
+    f, err := os.OpenFile(s.basePath + m.ID + ".md", os.O_CREATE | os.O_EXCL | os.O_WRONLY, 0644)
     if err != nil {
         return nil, err
     }
@@ -76,14 +82,9 @@ func (s service) SaveArticle(a *models.Article) (*models.Article, error) {
 }
 
 
-func basePath() string {
-    return "markdowns/"
-}
-
 func parseTitle(file []byte) string {
     re := regexp.MustCompile(`^#\s+(.+)\s`)
     title := re.FindSubmatch(file)
     return string(title[1])
 }
 
-var Service = service{}
